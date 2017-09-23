@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Myo Samples/Box On A Stick.unity
+  isLoaded: 1
+  isActive: 1
