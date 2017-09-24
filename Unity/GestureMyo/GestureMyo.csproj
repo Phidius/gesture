@@ -200,6 +200,7 @@
     <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrMathHelpers.cs" />
     <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrUIHelpers.cs" />
     <Compile Include="Assets\GoogleVR\Scripts\Video\GvrVideoPlayerTexture.cs" />
+    <Compile Include="Assets\MessageManager.cs" />
     <Compile Include="Assets\Myo Samples\Scripts\ColorBoxByPose.cs" />
     <Compile Include="Assets\Myo Samples\Scripts\JointOrientation.cs" />
     <Compile Include="Assets\Myo Samples\Scripts\SampleSceneGUI.cs" />
