@@ -49,14 +49,14 @@ public class UserController : MonoBehaviour {
         {
             if (triggerPressed)
             {
-                if (touchThumb)
-                {
+                //if (touchThumb)
+                //{
                     poseName = "Close";
-                }
-                else
-                {
-                    poseName = "ThumbsUp";
-                }
+                //}
+                //else
+                //{
+                //    poseName = "ThumbsUp";
+                //}
 
             }
             else // not triggerPressed
@@ -67,14 +67,14 @@ public class UserController : MonoBehaviour {
                 }
                 else // not touchIndex
                 {
-                    if (touchThumb)
-                    {
+                    //if (touchThumb)
+                    //{
                         poseName = "Point";
-                    }
-                    else
-                    {
-                        poseName = "Gun";
-                    }
+                    //}
+                    //else
+                    //{
+                    //    poseName = "Gun";
+                    //}
                 }
             }
         }
