@@ -17,6 +17,9 @@
 
         private bool IsForwardPressed()
         {
+            //Debug.Log(string.Format("{0}, {1}, {2}, {3}", canPress, VRTK_SDK_Bridge.GetControllerButtonState(SDK_BaseController.ButtonTypes.Trigger, SDK_BaseController.ButtonPressTypes.Press, controllerReference),
+            //    VRTK_SDK_Bridge.GetControllerButtonState(SDK_BaseController.ButtonTypes.Grip, SDK_BaseController.ButtonPressTypes.Press, controllerReference),
+            //    VRTK_SDK_Bridge.GetControllerButtonState(SDK_BaseController.ButtonTypes.Touchpad, SDK_BaseController.ButtonPressTypes.Press, controllerReference)));
             if (!VRTK_ControllerReference.IsValid(controllerReference))
             {
                 return false;
@@ -60,7 +63,7 @@
 
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             int nextSceneIndex = currentSceneIndex;
-
+            
             if (IsForwardPressed() || Input.GetKeyUp(KeyCode.Space))
             {
                 nextSceneIndex++;
