@@ -10,6 +10,7 @@ public class UserController : MonoBehaviour {
     public bool gripPressed = false;
     public bool touchIndex = false;
     public bool touchThumb = false;
+    public bool grabbable = false;
 
     public OVRInput.Controller Controller;
     public GestureController guestureController;
@@ -26,6 +27,8 @@ public class UserController : MonoBehaviour {
         GetComponentInParent<VRTK_InteractGrab>().GrabButtonReleased += DoGrabOff;
         GetComponentInParent<VRTK_InteractUse>().UseButtonPressed += DoUseOn;
         GetComponentInParent<VRTK_InteractUse>().UseButtonReleased += DoUseOff;
+        GetComponentInParent<VRTK_InteractTouch>().ControllerTouchInteractableObject += DoStartTouch;
+        GetComponentInParent<VRTK_InteractTouch>().ControllerUntouchInteractableObject += DoEndTouch;
         guestureController = GetComponent<GestureController>();
         if (hand == Hands.Left)
         {
@@ -55,10 +58,14 @@ public class UserController : MonoBehaviour {
             poseName = "Point";
             guestureController.Grab(false);
         }
-        else
+        else if (grabbable)
         {
             poseName = "Grab";
             guestureController.Grab(false);
+        }
+        else
+        {
+            poseName = "Open";
         }
             //if (triggerPressed)
             //{
@@ -137,5 +144,14 @@ public class UserController : MonoBehaviour {
     private void DoUseOff(object sender, ControllerInteractionEventArgs e)
     {
         triggerPressed = false;
+    }
+
+    private void DoStartTouch(object sender, ObjectInteractEventArgs e)
+    {
+        grabbable = true;
+    }
+    private void DoEndTouch(object sender, ObjectInteractEventArgs e)
+    {
+        grabbable = false;
     }
 }
