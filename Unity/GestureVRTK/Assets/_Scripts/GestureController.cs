@@ -26,6 +26,24 @@ public class GestureController : MonoBehaviour {
     private Transform pinky2;
     private Transform pinky3;
 
+    private FingerCollider thumb1Collider;
+    private FingerCollider thumb2Collider;
+    private FingerCollider thumb3Collider;
+    private FingerCollider index1Collider;
+    private FingerCollider index2Collider;
+    private FingerCollider index3Collider;
+    private FingerCollider middle1Collider;
+    private FingerCollider middle2Collider;
+    private FingerCollider middle3Collider;
+    private FingerCollider ring1Collider;
+    private FingerCollider ring2Collider;
+    private FingerCollider ring3Collider;
+    private FingerCollider pinky1Collider;
+    private FingerCollider pinky2Collider;
+    private FingerCollider pinky3Collider;
+
+    public BoxCollider palmCollider;
+
     private bool changePose = false;
 
     public bool triggerPressed = false;
@@ -55,6 +73,7 @@ public class GestureController : MonoBehaviour {
 
                 case "Thumb_3":
                     thumb3 = transform;
+                    thumb3Collider = transform.gameObject.GetComponent<FingerCollider>();
                     break;
 
                 case "Index_1":
@@ -67,6 +86,7 @@ public class GestureController : MonoBehaviour {
 
                 case "Index_3":
                     index3 = transform;
+                    index3Collider = transform.gameObject.GetComponent<FingerCollider>();
                     break;
 
                 case "Middle_1":
@@ -79,6 +99,7 @@ public class GestureController : MonoBehaviour {
 
                 case "Middle_3":
                     middle3 = transform;
+                    middle3Collider = transform.gameObject.GetComponent<FingerCollider>();
                     break;
 
                 case "Ring_1":
@@ -91,6 +112,7 @@ public class GestureController : MonoBehaviour {
 
                 case "Ring_3":
                     ring3 = transform;
+                    ring3Collider = transform.gameObject.GetComponent<FingerCollider>();
                     break;
 
                 case "Pinky_1":
@@ -103,6 +125,7 @@ public class GestureController : MonoBehaviour {
 
                 case "Pinky_3":
                     pinky3 = transform;
+                    pinky3Collider = transform.gameObject.GetComponent<FingerCollider>();
                     break;
 
             }
@@ -115,6 +138,17 @@ public class GestureController : MonoBehaviour {
         ApplyPose();        
     }
 
+    public void Grab(bool enable)
+    {
+        if (palmCollider)
+        {
+            palmCollider.isTrigger = enable;
+        }
+        if (index3Collider)
+        {
+            index3Collider.EnableCollider(enable);
+        }
+    }
     public void SelectPose(string poseName)
     {
         var pose = Poses.Find(r => r.Name.Equals(poseName));
@@ -137,27 +171,41 @@ public class GestureController : MonoBehaviour {
         {
             return;
         }
+
+        if (thumb3Collider && (thumb3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        {
+            thumb1.localEulerAngles = LerpTransform(thumb1, targetPose.RotateThumb.x, null, targetPose.SlideThumb);
+            thumb2.localEulerAngles = LerpTransform(thumb2, targetPose.RotateThumb.y, null, null);
+            thumb3.localEulerAngles = LerpTransform(thumb2, targetPose.RotateThumb.z, null, null);
+        }
         
-        thumb1.localEulerAngles = LerpTransform(thumb1, targetPose.RotateThumb.x, null, targetPose.SlideThumb);
-        thumb2.localEulerAngles = LerpTransform(thumb2, targetPose.RotateThumb.y, null, null);
-        thumb3.localEulerAngles = LerpTransform(thumb2, targetPose.RotateThumb.z, null, null);
+        if (index3Collider && (index3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        {
+            index1.localEulerAngles = LerpTransform(index1, targetPose.RotateIndex.x, targetPose.SlideIndex, null);
+            index2.localEulerAngles = LerpTransform(index2, targetPose.RotateIndex.y, null, null);
+            index3.localEulerAngles = LerpTransform(index3, targetPose.RotateIndex.z, null, null);
+        }
 
-        index1.localEulerAngles = LerpTransform(index1, targetPose.RotateIndex.x, targetPose.SlideIndex, null);
-        index2.localEulerAngles = LerpTransform(index2, targetPose.RotateIndex.y, null, null);
-        index3.localEulerAngles = LerpTransform(index3, targetPose.RotateIndex.z, null, null);
+        if (middle3Collider && (middle3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        {
+            middle1.localEulerAngles = LerpTransform(middle1, targetPose.RotateMiddle.x, targetPose.SlideMiddle, null);
+            middle2.localEulerAngles = LerpTransform(middle2, targetPose.RotateMiddle.y, null, null);
+            middle3.localEulerAngles = LerpTransform(middle3, targetPose.RotateMiddle.z, null, null);
+        }
 
-        middle1.localEulerAngles = LerpTransform(middle1, targetPose.RotateMiddle.x, targetPose.SlideMiddle, null);
-        middle2.localEulerAngles = LerpTransform(middle2, targetPose.RotateMiddle.y, null, null);
-        middle3.localEulerAngles = LerpTransform(middle3, targetPose.RotateMiddle.z, null, null);
+        if (ring3Collider && (ring3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        {
+            ring1.localEulerAngles = LerpTransform(ring1, targetPose.RotateRing.x, targetPose.SlideRing, null);
+            ring2.localEulerAngles = LerpTransform(ring2, targetPose.RotateRing.y, null, null);
+            ring3.localEulerAngles = LerpTransform(ring3, targetPose.RotateRing.z, null, null);
+        }
 
-        ring1.localEulerAngles = LerpTransform(ring1, targetPose.RotateRing.x, targetPose.SlideRing, null);
-        ring2.localEulerAngles = LerpTransform(ring2, targetPose.RotateRing.y, null, null);
-        ring3.localEulerAngles = LerpTransform(ring3, targetPose.RotateRing.z, null, null);
-
-        pinky1.localEulerAngles = LerpTransform(pinky1, targetPose.RotatePinky.x, targetPose.SlidePinky, null);
-        pinky2.localEulerAngles = LerpTransform(pinky2, targetPose.RotatePinky.y, null, null);
-        pinky3.localEulerAngles = LerpTransform(pinky3, targetPose.RotatePinky.z, null, null);
-
+        if (pinky3Collider && (pinky3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        {
+            pinky1.localEulerAngles = LerpTransform(pinky1, targetPose.RotatePinky.x, targetPose.SlidePinky, null);
+            pinky2.localEulerAngles = LerpTransform(pinky2, targetPose.RotatePinky.y, null, null);
+            pinky3.localEulerAngles = LerpTransform(pinky3, targetPose.RotatePinky.z, null, null);
+        }
 
         //thumb1.localEulerAngles = new Vector3(targetPose.SlideThumb, -95.39f, targetPose.RotateThumb.x);
         //thumb2.localEulerAngles = new Vector3(2.496f, -1.409f, targetPose.RotateThumb.y);

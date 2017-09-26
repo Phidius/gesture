@@ -15,7 +15,11 @@ public class JointOrientation : MonoBehaviour
     // Myo game object to connect with.
     // This object must have a ThalmicMyo script attached.
     public GameObject myo = null;
+<<<<<<< HEAD
     [Range(1,2)]
+=======
+    [Range (1,2)]
+>>>>>>> ecebfe5c56e3a282f1faa143b0529baa7c837cce
     public float rollMultiplier = 1f;
     // A rotation that compensates for the Myo armband's orientation parallel to the ground, i.e. yaw.
     // Once set, the direction the Myo armband is facing becomes "forward" within the program.
@@ -77,8 +81,13 @@ public class JointOrientation : MonoBehaviour
 
         // The relative roll is simply how much the current roll has changed relative to the reference roll.
         // adjustAngle simply keeps the resultant value within -180 to 180 degrees.
+<<<<<<< HEAD
         // rollMultiplier amplifies the forearm roll to emulate the additional wrist roll
         float relativeRoll = normalizeAngle ((roll - _referenceRoll)*rollMultiplier);
+=======
+        // rollMultiplier exagerates the roll to emulate the untracked twist of the wrist.
+        float relativeRoll = normalizeAngle ((roll - _referenceRoll) * rollMultiplier) ;
+>>>>>>> ecebfe5c56e3a282f1faa143b0529baa7c837cce
 
         // antiRoll represents a rotation about the myo Armband's forward axis adjusting for reference roll.
         Quaternion antiRoll = Quaternion.AngleAxis (relativeRoll, myo.transform.forward);
