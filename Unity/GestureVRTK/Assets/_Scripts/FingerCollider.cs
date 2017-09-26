@@ -4,18 +4,29 @@ using UnityEngine;
 
 public class FingerCollider : MonoBehaviour {
 
-    public string colliderName = string.Empty;
+    public string otherName = string.Empty;
+    private SphereCollider collider;
+
+    void Start()
+    {
+        collider = gameObject.GetComponent<SphereCollider>();
+    }
+
+    public void EnableCollider(bool enable)
+    {
+        collider.isTrigger = enable;
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        colliderName = other.gameObject.name;
+        otherName = other.gameObject.name;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == colliderName)
+        if (other.gameObject.name == otherName)
         {
-            colliderName = string.Empty;
+            otherName = string.Empty;
         }
     }
 }

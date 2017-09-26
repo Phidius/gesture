@@ -47,55 +47,69 @@ public class UserController : MonoBehaviour {
         string poseName;
         if (gripPressed)
         {
-            if (triggerPressed)
-            {
+            poseName = "Close";
+            guestureController.Grab(true);
+        }
+        else if(triggerPressed)
+        {
+            poseName = "Point";
+            guestureController.Grab(false);
+        }
+        else
+        {
+            poseName = "Grab";
+            guestureController.Grab(false);
+        }
+            //if (triggerPressed)
+            //{
                 //if (touchThumb)
                 //{
-                    poseName = "Close";
+                //    poseName = "Close";
                 //}
                 //else
                 //{
                 //    poseName = "ThumbsUp";
                 //}
 
-            }
-            else // not triggerPressed
-            {
-                if (touchIndex)
-                {
-                    poseName = "ClosePinch";
-                }
-                else // not touchIndex
-                {
-                    //if (touchThumb)
-                    //{
-                        poseName = "Point";
-                    //}
-                    //else
-                    //{
-                    //    poseName = "Gun";
-                    //}
-                }
-            }
-        }
-        else // Not gripPressed
-        {
-            if (triggerPressed)
-            {
-                poseName = "OpenPinch";
-            }
-            else // Not triggerPressed
-            {
-                if (touchIndex)
-                {
-                    poseName = "OK";
-                }
-                else // Not touchIndex
-                {
-                    poseName = "Grab";
-                }
-            }
-        }
+            //}
+            //else // not triggerPressed
+            //{
+        //        if (touchIndex)
+        //        {
+        //            poseName = "ClosePinch";
+        //        }
+        //        else // not touchIndex
+        //        {
+        //            //if (touchThumb)
+        //            //{
+        //                poseName = "Point";
+        //            //}
+        //            //else
+        //            //{
+        //            //    poseName = "Gun";
+        //            //}
+        //        }
+        //    }
+        //}
+        //else // Not gripPressed
+        //{
+        //    guestureController.Grab(false);
+        //    if (triggerPressed)
+        //    {
+        //        poseName = "OpenPinch";
+        //    }
+        //    else // Not triggerPressed
+        //    {
+        //        if (touchIndex)
+        //        {
+        //            poseName = "OK";
+        //        }
+        //        else // Not touchIndex
+        //        {
+        //            poseName = "Grab";
+        //        }
+        //    }
+        //}
 
         if (!guestureController.targetPose.Name.Equals(poseName))
         {
