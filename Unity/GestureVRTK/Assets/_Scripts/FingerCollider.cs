@@ -5,14 +5,14 @@ using UnityEngine;
 public class FingerCollider : MonoBehaviour {
 
     public string otherName = string.Empty;
-    private SphereCollider collider;
+    private CapsuleCollider collider;
 
     void Start()
     {
-        collider = gameObject.GetComponent<SphereCollider>();
+        collider = gameObject.GetComponent<CapsuleCollider>();
     }
 
-    public void EnableCollider(bool enable)
+    public void Touch(bool enable)
     {
         collider.isTrigger = enable;
     }

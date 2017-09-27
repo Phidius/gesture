@@ -43,9 +43,7 @@ public class GestureController : MonoBehaviour {
     private FingerCollider pinky3Collider;
 
     public BoxCollider palmCollider;
-
-    private bool changePose = false;
-
+    
     public bool triggerPressed = false;
     public bool gripPressed = false;
     public bool touchIndex = false;
@@ -138,17 +136,24 @@ public class GestureController : MonoBehaviour {
         ApplyPose();        
     }
 
-    public void Grab(bool enable)
+    //public void Grab(bool enable)
+    //{
+    //    if (palmCollider)
+    //    {
+    //        palmCollider.isTrigger = enable;
+    //    }
+    //}
+    public void EnableTrigger(bool enable)
     {
-        if (palmCollider)
-        {
-            palmCollider.isTrigger = enable;
-        }
-        if (index3Collider)
-        {
-            index3Collider.EnableCollider(enable);
-        }
+        // When the hand is closing, turn the trigger on to prevent physics interaction with the grabbed object.
+        palmCollider.isTrigger = enable;
+        thumb3Collider.Touch(enable);
+        index3Collider.Touch(enable);
+        middle3Collider.Touch(enable);
+        ring3Collider.Touch(enable);
+        pinky3Collider.Touch(enable);
     }
+
     public void SelectPose(string poseName)
     {
         var pose = Poses.Find(r => r.Name.Equals(poseName));
@@ -157,16 +162,11 @@ public class GestureController : MonoBehaviour {
             targetPose = pose;
         }
         selectedPose = targetPose.Name;
-        changePose = true;
+        EnableTrigger(selectedPose.Equals("Close"));
     }
 
     public void ApplyPose()
     {
-        //if (!changePose)
-        //{
-        //    return;
-        //}
-
         if (thumb1 == null)
         {
             return;
@@ -226,8 +226,6 @@ public class GestureController : MonoBehaviour {
         //pinky1.localEulerAngles = new Vector3(10f, -6.411f, targetPose.RotatePinky.x);
         //pinky2.localEulerAngles = new Vector3(-1.631f, 4.197f, targetPose.RotatePinky.y);
         //pinky3.localEulerAngles = new Vector3(0.209f, -2.287f, targetPose.RotatePinky.z);
-
-        changePose = false;
     }
 
     private Vector3 LerpTransform(Transform transform, float zAxis, float? yAxis, float? xAxis)

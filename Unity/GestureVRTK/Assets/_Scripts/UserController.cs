@@ -51,17 +51,17 @@ public class UserController : MonoBehaviour {
         if (gripPressed)
         {
             poseName = "Close";
-            guestureController.Grab(true);
+            //guestureController.Grab(true);
         }
         else if(triggerPressed)
         {
             poseName = "Point";
-            guestureController.Grab(false);
+            //guestureController.Grab(false);
         }
         else if (grabbable)
         {
             poseName = "Grab";
-            guestureController.Grab(false);
+            //guestureController.Grab(false);
         }
         else
         {
@@ -149,6 +149,7 @@ public class UserController : MonoBehaviour {
     private void DoStartTouch(object sender, ObjectInteractEventArgs e)
     {
         grabbable = true;
+
     }
     private void DoEndTouch(object sender, ObjectInteractEventArgs e)
     {
