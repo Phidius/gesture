@@ -60,12 +60,12 @@ public class UserController : MonoBehaviour {
         }
         else if (grabbable)
         {
-            poseName = "Grab";
+            poseName = "Spread";
             //guestureController.Grab(false);
         }
         else
         {
-            poseName = "Open";
+            poseName = "Idle";
         }
             //if (triggerPressed)
             //{

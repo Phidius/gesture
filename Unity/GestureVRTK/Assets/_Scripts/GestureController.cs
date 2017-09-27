@@ -54,7 +54,7 @@ public class GestureController : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        targetPose = Poses.Find(r => r.Name.Equals("Open"));
+        targetPose = Poses.Find(r => r.Name.Equals("Idle"));
         selectedPose = targetPose.Name;
         
         foreach(var transform in gameObject.GetComponentsInChildren<Transform>())
@@ -135,17 +135,20 @@ public class GestureController : MonoBehaviour {
     {
         ApplyPose();        
     }
+    bool disableTrigger = false;
+    public void EnableTrigger()
+    {
+        if (disableTrigger)
+        {
+            EnableTrigger(false);
+            disableTrigger = false;
+        }
+    }
 
-    //public void Grab(bool enable)
-    //{
-    //    if (palmCollider)
-    //    {
-    //        palmCollider.isTrigger = enable;
-    //    }
-    //}
     public void EnableTrigger(bool enable)
     {
-        // When the hand is closing, turn the trigger on to prevent physics interaction with the grabbed object.
+        Debug.Log("isTrigger = " + enable);
+        // When the hand is closing, turn the trigger on to allow each finger to stop rotating when encountering a collider.
         palmCollider.isTrigger = enable;
         thumb3Collider.Touch(enable);
         index3Collider.Touch(enable);
@@ -162,7 +165,18 @@ public class GestureController : MonoBehaviour {
             targetPose = pose;
         }
         selectedPose = targetPose.Name;
-        EnableTrigger(selectedPose.Equals("Close"));
+        //EnableTrigger(selectedPose.Equals("Close"));
+        Debug.Log(selectedPose);
+        if (selectedPose.Equals("Close"))
+        {
+            EnableTrigger(true);
+        }
+        else
+        {
+            disableTrigger = true;
+            Invoke("EnableTrigger", .5f);
+        }
+        
     }
 
     public void ApplyPose()
@@ -172,35 +186,35 @@ public class GestureController : MonoBehaviour {
             return;
         }
 
-        if (thumb3Collider && (thumb3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        if (thumb3Collider && (thumb3Collider.otherName == string.Empty || targetPose.Name == "Spread"))
         {
             thumb1.localEulerAngles = LerpTransform(thumb1, targetPose.RotateThumb.x, null, targetPose.SlideThumb);
             thumb2.localEulerAngles = LerpTransform(thumb2, targetPose.RotateThumb.y, null, null);
             thumb3.localEulerAngles = LerpTransform(thumb2, targetPose.RotateThumb.z, null, null);
         }
         
-        if (index3Collider && (index3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        if (index3Collider && (index3Collider.otherName == string.Empty || targetPose.Name == "Spread"))
         {
             index1.localEulerAngles = LerpTransform(index1, targetPose.RotateIndex.x, targetPose.SlideIndex, null);
             index2.localEulerAngles = LerpTransform(index2, targetPose.RotateIndex.y, null, null);
             index3.localEulerAngles = LerpTransform(index3, targetPose.RotateIndex.z, null, null);
         }
 
-        if (middle3Collider && (middle3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        if (middle3Collider && (middle3Collider.otherName == string.Empty || targetPose.Name == "Spread"))
         {
             middle1.localEulerAngles = LerpTransform(middle1, targetPose.RotateMiddle.x, targetPose.SlideMiddle, null);
             middle2.localEulerAngles = LerpTransform(middle2, targetPose.RotateMiddle.y, null, null);
             middle3.localEulerAngles = LerpTransform(middle3, targetPose.RotateMiddle.z, null, null);
         }
 
-        if (ring3Collider && (ring3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        if (ring3Collider && (ring3Collider.otherName == string.Empty || targetPose.Name == "Spread"))
         {
             ring1.localEulerAngles = LerpTransform(ring1, targetPose.RotateRing.x, targetPose.SlideRing, null);
             ring2.localEulerAngles = LerpTransform(ring2, targetPose.RotateRing.y, null, null);
             ring3.localEulerAngles = LerpTransform(ring3, targetPose.RotateRing.z, null, null);
         }
 
-        if (pinky3Collider && (pinky3Collider.otherName == string.Empty || targetPose.Name == "Grab"))
+        if (pinky3Collider && (pinky3Collider.otherName == string.Empty || targetPose.Name == "Spread"))
         {
             pinky1.localEulerAngles = LerpTransform(pinky1, targetPose.RotatePinky.x, targetPose.SlidePinky, null);
             pinky2.localEulerAngles = LerpTransform(pinky2, targetPose.RotatePinky.y, null, null);
