@@ -169,6 +169,7 @@ public class GestureController : MonoBehaviour {
         Debug.Log(selectedPose);
         if (selectedPose.Equals("Close"))
         {
+            disableTrigger = false; // Prevent a late-fire of Invoke("EnableTrigger")
             EnableTrigger(true);
         }
         else
