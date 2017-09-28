@@ -1,0 +1,9 @@
+/Unity/GestureMyo/Library
+/Unity/GestureVRTK/Library
+/Unity/GestureVRTK/ProjectSettings
+/Unity/GestureVRTK/*.csproj
+/Unity/GestureVRTK/*.sln
+/Unity/GestureMyo/*.csproj
+/Unity/GestureMyo/*.sln
+/Unity/GestureMyo/ProjectSettings
+*.meta
