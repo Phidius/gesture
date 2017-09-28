@@ -42,82 +42,27 @@ public class UserController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //var handTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Controller);
-        //var handGrip = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, Controller);
         touchIndex = OVRInput.Get(OVRInput.Touch.PrimaryIndexTrigger, Controller);
         touchThumb = OVRInput.Get(OVRInput.Touch.PrimaryThumbRest, Controller);
-        //Debug.Log(string.Format("{0}Index:{1} {0}Thumb{2}", hand, touchIndex, touchThumb));
+
         string poseName;
         if (gripPressed)
         {
             poseName = "Close";
-            //guestureController.Grab(true);
         }
         else if(triggerPressed)
         {
             poseName = "Point";
-            //guestureController.Grab(false);
         }
         else if (grabbable)
         {
             poseName = "Spread";
-            //guestureController.Grab(false);
         }
         else
         {
             poseName = "Idle";
         }
-            //if (triggerPressed)
-            //{
-                //if (touchThumb)
-                //{
-                //    poseName = "Close";
-                //}
-                //else
-                //{
-                //    poseName = "ThumbsUp";
-                //}
-
-            //}
-            //else // not triggerPressed
-            //{
-        //        if (touchIndex)
-        //        {
-        //            poseName = "ClosePinch";
-        //        }
-        //        else // not touchIndex
-        //        {
-        //            //if (touchThumb)
-        //            //{
-        //                poseName = "Point";
-        //            //}
-        //            //else
-        //            //{
-        //            //    poseName = "Gun";
-        //            //}
-        //        }
-        //    }
-        //}
-        //else // Not gripPressed
-        //{
-        //    guestureController.Grab(false);
-        //    if (triggerPressed)
-        //    {
-        //        poseName = "OpenPinch";
-        //    }
-        //    else // Not triggerPressed
-        //    {
-        //        if (touchIndex)
-        //        {
-        //            poseName = "OK";
-        //        }
-        //        else // Not touchIndex
-        //        {
-        //            poseName = "Grab";
-        //        }
-        //    }
-        //}
-
+        
         if (!guestureController.targetPose.Name.Equals(poseName))
         {
             guestureController.SelectPose(poseName);
@@ -126,13 +71,11 @@ public class UserController : MonoBehaviour {
 
     private void DoGrabOn(object sender, ControllerInteractionEventArgs e)
     {
-        //SelectPose("Close");
         gripPressed = true;
     }
 
     private void DoGrabOff(object sender, ControllerInteractionEventArgs e)
     {
-        //SelectPose("Open");
         gripPressed = false;
     }
 

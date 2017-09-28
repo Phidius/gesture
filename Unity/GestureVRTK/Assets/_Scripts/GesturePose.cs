@@ -20,5 +20,7 @@ public class GesturePose
     public float SlideMiddle;
     public float SlideRing;
     public float SlidePinky;
+    [SerializeField]
+    public bool ColliderOff = false;
 }
 

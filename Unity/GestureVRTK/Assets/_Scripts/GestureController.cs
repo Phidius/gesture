@@ -147,14 +147,13 @@ public class GestureController : MonoBehaviour {
 
     public void EnableTrigger(bool enable)
     {
-        Debug.Log("isTrigger = " + enable);
         // When the hand is closing, turn the trigger on to allow each finger to stop rotating when encountering a collider.
-        palmCollider.isTrigger = enable;
-        thumb3Collider.Touch(enable);
-        index3Collider.Touch(enable);
-        middle3Collider.Touch(enable);
-        ring3Collider.Touch(enable);
-        pinky3Collider.Touch(enable);
+        if (palmCollider != null) palmCollider.isTrigger = enable;
+        if (thumb3Collider != null) thumb3Collider.Touch(enable);
+        if (index3Collider != null) index3Collider.Touch(enable);
+        if (middle3Collider != null) middle3Collider.Touch(enable);
+        if (ring3Collider != null) ring3Collider.Touch(enable);
+        if (pinky3Collider != null) pinky3Collider.Touch(enable);
     }
 
     public void SelectPose(string poseName)
@@ -165,9 +164,8 @@ public class GestureController : MonoBehaviour {
             targetPose = pose;
         }
         selectedPose = targetPose.Name;
-        //EnableTrigger(selectedPose.Equals("Close"));
-        Debug.Log(selectedPose);
-        if (selectedPose.Equals("Close"))
+
+        if (targetPose.ColliderOff)
         {
             disableTrigger = false; // Prevent a late-fire of Invoke("EnableTrigger")
             EnableTrigger(true);
