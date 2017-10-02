@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 [System.Serializable]
 public class GesturePose
 {
@@ -22,5 +23,10 @@ public class GesturePose
     public float SlidePinky;
     [SerializeField]
     public bool ColliderOff = false;
+
+    public GesturePose()
+    {
+
+    }
 }
 

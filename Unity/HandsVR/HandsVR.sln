@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandsVR", "HandsVR.csproj", "{EA9AD37E-BE6B-B3B1-2030-47BA0C76A5BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandsVR.Editor", "HandsVR.Editor.csproj", "{94853245-4A01-9140-1C27-D7F08DA18D15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA9AD37E-BE6B-B3B1-2030-47BA0C76A5BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA9AD37E-BE6B-B3B1-2030-47BA0C76A5BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA9AD37E-BE6B-B3B1-2030-47BA0C76A5BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA9AD37E-BE6B-B3B1-2030-47BA0C76A5BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94853245-4A01-9140-1C27-D7F08DA18D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94853245-4A01-9140-1C27-D7F08DA18D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94853245-4A01-9140-1C27-D7F08DA18D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94853245-4A01-9140-1C27-D7F08DA18D15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

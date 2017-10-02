@@ -10,3 +10,5 @@
 *.suo
 /Unity/GestureVRTK/.vs
 /Unity/GestureVRTK/Temp
+/Unity/HandsVR/Library
+/Unity/HandsVR/ProjectSettings

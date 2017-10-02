@@ -8,6 +8,6 @@ public class PoseEditor : Editor {
 
     public override void OnInspectorGUI()
     {
-        //GesturePose pose = (GesturePose)target;
+        //GesturePose pose = target;
     }
 }

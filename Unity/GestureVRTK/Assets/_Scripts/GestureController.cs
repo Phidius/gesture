@@ -187,9 +187,10 @@ public class GestureController : MonoBehaviour {
 
         if (thumb3Collider && (thumb3Collider.otherName == string.Empty || targetPose.Name == "Spread"))
         {
+
             thumb1.localEulerAngles = LerpTransform(thumb1, targetPose.RotateThumb.x, null, targetPose.SlideThumb);
             thumb2.localEulerAngles = LerpTransform(thumb2, targetPose.RotateThumb.y, null, null);
-            thumb3.localEulerAngles = LerpTransform(thumb2, targetPose.RotateThumb.z, null, null);
+            thumb3.localEulerAngles = LerpTransform(thumb3, targetPose.RotateThumb.z, null, null);
         }
         
         if (index3Collider && (index3Collider.otherName == string.Empty || targetPose.Name == "Spread"))
@@ -244,6 +245,8 @@ public class GestureController : MonoBehaviour {
     private Vector3 LerpTransform(Transform transform, float zAxis, float? yAxis, float? xAxis)
     {
         var currentRotation = transform.localEulerAngles;
+
+        currentRotation.z = Mathf.LerpAngle(currentRotation.z, zAxis, Time.deltaTime * smoothness);
         if (xAxis != null)
         {
             currentRotation.x = Mathf.LerpAngle(currentRotation.x, (float)xAxis, Time.deltaTime * smoothness);
@@ -252,7 +255,6 @@ public class GestureController : MonoBehaviour {
         {
             currentRotation.y = Mathf.LerpAngle(currentRotation.y, (float)yAxis, Time.deltaTime * smoothness);
         }
-        currentRotation.z = Mathf.LerpAngle(currentRotation.z, zAxis, Time.deltaTime * smoothness);
         return currentRotation;
     }
 }
