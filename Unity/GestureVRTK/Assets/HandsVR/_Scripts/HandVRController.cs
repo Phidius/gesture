@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HandVRController : MonoBehaviour {
-    
+
+    [Range(1, 20)]
+    public int smoothness = 10;
     [Range(0f, 1f)]
     public float thumbCurl;
     [Range(0f, 1f)]
@@ -17,10 +19,6 @@ public class HandVRController : MonoBehaviour {
 
     [Range(0f, 1f)]
     public float fingerSpread;
-    [Range(0f, 1f)]
-    public float thumbSpread;
-
-    private int smoothness = 7;
 
     private Transform thumb1;
     private Transform thumb2;
@@ -38,14 +36,13 @@ public class HandVRController : MonoBehaviour {
     private Transform pinky2;
     private Transform pinky3;
 
-    private Collider palmCollider;
     private FingerCollider thumbCollider;
     private FingerCollider indexCollider;
     private FingerCollider middleCollider;
     private FingerCollider ringCollider;
     private FingerCollider pinkyCollider;
 
-    public Vector3 rotThumb1 = new Vector3(270f, 0f, 315f);
+    Vector3 rotThumb1 = new Vector3(270f, 300f, 15f);
     Vector3 rotThumb2 = new Vector3(0f, 0f, 0f);
     Vector3 rotThumb3 = new Vector3(0f, 0f, 0f);
 
@@ -57,7 +54,7 @@ public class HandVRController : MonoBehaviour {
     Vector3 rotMiddle2 = new Vector3(0f, 0f, 0f);
     Vector3 rotMiddle3 = new Vector3(0f, 0f, 0f);
 
-    Vector3 rotRing1 = new Vector3(0f, 10f, 0f);
+    Vector3 rotRing1 = new Vector3(0f, 5f, 0f);
     Vector3 rotRing2 = new Vector3(0f, 0f, 0f);
     Vector3 rotRing3 = new Vector3(0f, 0f, 0f);
 
@@ -72,9 +69,6 @@ public class HandVRController : MonoBehaviour {
         {
             switch (transform.name)
             {
-                case "Palm_R":
-                    palmCollider = transform.GetComponent<Collider>();
-                    break;
                 case "Thumb_1":
                     thumb1 = transform;
                     break;
@@ -167,12 +161,10 @@ public class HandVRController : MonoBehaviour {
         var lastPinky2 = new Vector3(rotPinky2.x, rotPinky2.y, rotPinky2.z);
         var lastPinky3 = new Vector3(rotPinky3.x, rotPinky3.y, rotPinky3.z);
 
-        rotThumb1.x = Mathf.Lerp(rotThumb1.x, 270 - (50 * thumbSpread), Time.deltaTime * smoothness);
-        //rotThumb1.y = Mathf.Lerp(rotThumb1.y, (45 * thumbSpread), Time.deltaTime * smoothness);
-        rotThumb1.z = Mathf.Lerp(rotThumb1.z, 315 + (50 * thumbCurl), Time.deltaTime * smoothness);
-
-        rotThumb2.z = Mathf.Lerp(rotThumb2.z, 10 * thumbCurl, Time.deltaTime * smoothness);
-        rotThumb3.z = Mathf.Lerp(rotThumb3.z, 40 * thumbCurl, Time.deltaTime * smoothness);
+        rotThumb1.z = 15 + (50 * thumbCurl);
+        rotThumb1.x = 270 + (30 * thumbCurl);
+        rotThumb2.z = 10 * thumbCurl;
+        rotThumb3.z = 40 * thumbCurl;
         thumb1.localEulerAngles = rotThumb1;
         thumb2.localEulerAngles = rotThumb2;
         thumb3.localEulerAngles = rotThumb3;
@@ -225,7 +217,7 @@ public class HandVRController : MonoBehaviour {
         }
 
         rotRing1.z = Mathf.Lerp(rotRing1.z, 90 * ringCurl, Time.deltaTime * smoothness);
-        rotRing1.y = Mathf.Lerp(rotRing1.y, (15f * fingerSpread), Time.deltaTime * smoothness);
+        rotRing1.y = Mathf.Lerp(rotRing1.y, (5 * fingerSpread), Time.deltaTime * smoothness);
         rotRing2.z = Mathf.Lerp(rotRing2.z, 90 * ringCurl, Time.deltaTime * smoothness);
         rotRing3.z = Mathf.Lerp(rotRing3.z, 90 * ringCurl, Time.deltaTime * smoothness);
         ring1.localEulerAngles = rotRing1;
@@ -262,8 +254,7 @@ public class HandVRController : MonoBehaviour {
 
     public void EnableGrab(bool enable)
     {
-
-        palmCollider.isTrigger = enable;
+        // Enabling the trigger allows for stopping the finger when making contact
         thumbCollider.Touch(enable);
         indexCollider.Touch(enable);
         middleCollider.Touch(enable);
