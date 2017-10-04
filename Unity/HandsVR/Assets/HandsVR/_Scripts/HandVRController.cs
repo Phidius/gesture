@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HandVRController : MonoBehaviour {
-    
+
+    public bool PreventMovement = false;
     [Range(0f, 1f)]
     public float thumbCurl;
     [Range(0f, 1f)]
@@ -17,8 +18,6 @@ public class HandVRController : MonoBehaviour {
 
     [Range(0f, 1f)]
     public float fingerSpread;
-    [Range(0f, 1f)]
-    public float thumbSpread;
 
     private int smoothness = 7;
 
@@ -45,7 +44,7 @@ public class HandVRController : MonoBehaviour {
     private FingerCollider ringCollider;
     private FingerCollider pinkyCollider;
 
-    public Vector3 rotThumb1 = new Vector3(270f, 0f, 315f);
+    Vector3 rotThumb1 = new Vector3(300f, 220f, 75f);
     Vector3 rotThumb2 = new Vector3(0f, 0f, 0f);
     Vector3 rotThumb3 = new Vector3(0f, 0f, 0f);
 
@@ -65,6 +64,7 @@ public class HandVRController : MonoBehaviour {
     Vector3 rotPinky2 = new Vector3(0f, 0f, 0f);
     Vector3 rotPinky3 = new Vector3(0f, 0f, 0f);
 
+    public Vector3 thumbRotation;
     // Use this for initialization
     void Start()
     {
@@ -147,6 +147,15 @@ public class HandVRController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (!PreventMovement)
+        {
+            Movement();
+        }
+        
+    }
+
+    private void Movement()
+    {
         var lastThumb1 = new Vector3(rotThumb1.x, rotThumb1.y, rotThumb1.z);
         var lastThumb2 = new Vector3(rotThumb2.x, rotThumb2.y, rotThumb2.z);
         var lastThumb3 = new Vector3(rotThumb3.x, rotThumb3.y, rotThumb3.z);
@@ -166,11 +175,8 @@ public class HandVRController : MonoBehaviour {
         var lastPinky1 = new Vector3(rotPinky1.x, rotPinky1.y, rotPinky1.z);
         var lastPinky2 = new Vector3(rotPinky2.x, rotPinky2.y, rotPinky2.z);
         var lastPinky3 = new Vector3(rotPinky3.x, rotPinky3.y, rotPinky3.z);
-
-        rotThumb1.x = Mathf.Lerp(rotThumb1.x, 270 - (50 * thumbSpread), Time.deltaTime * smoothness);
-        //rotThumb1.y = Mathf.Lerp(rotThumb1.y, (45 * thumbSpread), Time.deltaTime * smoothness);
-        rotThumb1.z = Mathf.Lerp(rotThumb1.z, 315 + (50 * thumbCurl), Time.deltaTime * smoothness);
-
+        
+        rotThumb1.z = Mathf.Lerp(rotThumb1.z, 75 + (70 * thumbCurl), Time.deltaTime * smoothness);
         rotThumb2.z = Mathf.Lerp(rotThumb2.z, 10 * thumbCurl, Time.deltaTime * smoothness);
         rotThumb3.z = Mathf.Lerp(rotThumb3.z, 40 * thumbCurl, Time.deltaTime * smoothness);
         thumb1.localEulerAngles = rotThumb1;
@@ -187,6 +193,10 @@ public class HandVRController : MonoBehaviour {
             thumb2.localEulerAngles = rotThumb2;
             thumb3.localEulerAngles = rotThumb3;
         }
+
+        thumbRotation.x = rotThumb1.x;
+        thumbRotation.y = rotThumb1.y;
+        thumbRotation.z = rotThumb1.z;
 
         rotIndex1.z = Mathf.Lerp(rotIndex1.z, 90 * indexCurl, Time.deltaTime * smoothness);
         rotIndex1.y = Mathf.Lerp(rotIndex1.y, 360 + (-10 * fingerSpread), Time.deltaTime * smoothness);
@@ -208,9 +218,9 @@ public class HandVRController : MonoBehaviour {
         }
 
         rotMiddle1.z = Mathf.Lerp(rotMiddle1.z, 90 * middleCurl, Time.deltaTime * smoothness);
-        rotMiddle1.y = Mathf.Lerp(rotMiddle1.y, (3 * fingerSpread), Time.deltaTime* smoothness);
-        rotMiddle2.z = Mathf.Lerp(rotMiddle2.z, 90 * middleCurl, Time.deltaTime* smoothness);
-        rotMiddle3.z = Mathf.Lerp(rotMiddle3.z, 90 * middleCurl, Time.deltaTime* smoothness);
+        rotMiddle1.y = Mathf.Lerp(rotMiddle1.y, (3 * fingerSpread), Time.deltaTime * smoothness);
+        rotMiddle2.z = Mathf.Lerp(rotMiddle2.z, 90 * middleCurl, Time.deltaTime * smoothness);
+        rotMiddle3.z = Mathf.Lerp(rotMiddle3.z, 90 * middleCurl, Time.deltaTime * smoothness);
         middle1.localEulerAngles = rotMiddle1;
         middle2.localEulerAngles = rotMiddle2;
         middle3.localEulerAngles = rotMiddle3;
@@ -259,7 +269,6 @@ public class HandVRController : MonoBehaviour {
             pinky3.localEulerAngles = rotPinky3;
         }
     }
-
     public void EnableGrab(bool enable)
     {
 

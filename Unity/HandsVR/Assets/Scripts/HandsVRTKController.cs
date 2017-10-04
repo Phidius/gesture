@@ -12,6 +12,8 @@ public class HandsVRTKController : MonoBehaviour {
     public bool touchThumb = false;
     public bool grabbable = false;
 
+    public bool ignoreHardwareInput = false;
+
     private OVRInput.Controller Controller;
     private HandVRController handVRController;
 
@@ -42,6 +44,14 @@ public class HandsVRTKController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!ignoreHardwareInput)
+        {
+            HandleHardwareInput();
+        }
+    }
+
+    private void HandleHardwareInput()
+    {
         touchIndex = OVRInput.Get(OVRInput.Touch.SecondaryIndexTrigger, Controller);
         touchThumb = OVRInput.Get(OVRInput.Touch.PrimaryThumbRest, Controller);
 
@@ -49,7 +59,7 @@ public class HandsVRTKController : MonoBehaviour {
         if (gripPressed)
         {
             handVRController.fingerSpread = 0;
-            handVRController.thumbCurl = 1;
+            handVRController.thumbCurl = .9f;
             handVRController.indexCurl = 1;
             handVRController.middleCurl = 1;
             handVRController.ringCurl = 1;
@@ -77,7 +87,6 @@ public class HandsVRTKController : MonoBehaviour {
             handVRController.EnableGrab(true);
         }
     }
-
     private void DoGrabOn(object sender, ControllerInteractionEventArgs e)
     {
         gripPressed = true;
