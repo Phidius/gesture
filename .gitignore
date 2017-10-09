@@ -6,7 +6,6 @@
 /Unity/GestureMyo/*.csproj
 /Unity/GestureMyo/*.sln
 /Unity/GestureMyo/ProjectSettings
-*.meta
 *.suo
 /Unity/GestureVRTK/.vs
 /Unity/GestureVRTK/Temp
