@@ -37,14 +37,14 @@ public class HandVRController : MonoBehaviour {
     private Transform pinky2;
     private Transform pinky3;
 
-    private Collider palmCollider;
-    private FingerCollider thumbCollider;
-    private FingerCollider indexCollider;
-    private FingerCollider middleCollider;
-    private FingerCollider ringCollider;
-    private FingerCollider pinkyCollider;
+    public FingerCollider palmCollider;
+    public FingerCollider thumbCollider;
+    public FingerCollider indexCollider;
+    public FingerCollider middleCollider;
+    public FingerCollider ringCollider;
+    public FingerCollider pinkyCollider;
 
-    Vector3 rotThumb1 = new Vector3(300f, 220f, 75f);
+    Vector3 rotThumb1 = new Vector3(300f, 220f, 95f);
     Vector3 rotThumb2 = new Vector3(0f, 0f, 0f);
     Vector3 rotThumb3 = new Vector3(0f, 0f, 0f);
 
@@ -60,7 +60,7 @@ public class HandVRController : MonoBehaviour {
     Vector3 rotRing2 = new Vector3(0f, 0f, 0f);
     Vector3 rotRing3 = new Vector3(0f, 0f, 0f);
 
-    Vector3 rotPinky1 = new Vector3(0f, 20f, 0f);
+    Vector3 rotPinky1 = new Vector3(0f, 350, 0f);
     Vector3 rotPinky2 = new Vector3(0f, 0f, 0f);
     Vector3 rotPinky3 = new Vector3(0f, 0f, 0f);
 
@@ -73,7 +73,7 @@ public class HandVRController : MonoBehaviour {
             switch (transform.name)
             {
                 case "Palm_R":
-                    palmCollider = transform.GetComponent<Collider>();
+                    palmCollider = transform.GetComponent<FingerCollider>();
                     break;
                 case "Thumb_1":
                     thumb1 = transform;
@@ -175,10 +175,28 @@ public class HandVRController : MonoBehaviour {
         var lastPinky1 = new Vector3(rotPinky1.x, rotPinky1.y, rotPinky1.z);
         var lastPinky2 = new Vector3(rotPinky2.x, rotPinky2.y, rotPinky2.z);
         var lastPinky3 = new Vector3(rotPinky3.x, rotPinky3.y, rotPinky3.z);
-        
-        rotThumb1.z = Mathf.Lerp(rotThumb1.z, 75 + (70 * thumbCurl), Time.deltaTime * smoothness);
-        rotThumb2.z = Mathf.Lerp(rotThumb2.z, 10 * thumbCurl, Time.deltaTime * smoothness);
-        rotThumb3.z = Mathf.Lerp(rotThumb3.z, 40 * thumbCurl, Time.deltaTime * smoothness);
+
+        var thumbRotation1 = Mathf.Lerp(rotThumb1.z, 95f + (50f * thumbCurl), Time.deltaTime * smoothness);
+        var thumbRotation2 = Mathf.Lerp(rotThumb2.z, 10f * thumbCurl, Time.deltaTime * smoothness);
+        var thumbRotation3 = Mathf.Lerp(rotThumb3.z, 40f * thumbCurl, Time.deltaTime * smoothness);
+        if (thumbCollider)
+        {
+            if (thumbRotation1 > rotThumb1.z)
+            {
+                // The desired rotation is closing
+                thumbCollider.Trigger(true, Color.green);
+            }
+            else if (thumbRotation1 < rotThumb1.z)
+            {
+                // The desired rotation is opening
+                thumbCollider.Trigger(false, Color.white);
+            }
+            // If desired rotation is not a change, leave trigger as is.
+        }
+        rotThumb1.z = thumbRotation1;
+        rotThumb2.z = thumbRotation2;
+        rotThumb3.z = thumbRotation3;
+
         thumb1.localEulerAngles = rotThumb1;
         thumb2.localEulerAngles = rotThumb2;
         thumb3.localEulerAngles = rotThumb3;
@@ -198,14 +216,33 @@ public class HandVRController : MonoBehaviour {
         thumbRotation.y = rotThumb1.y;
         thumbRotation.z = rotThumb1.z;
 
-        rotIndex1.z = Mathf.Lerp(rotIndex1.z, 90 * indexCurl, Time.deltaTime * smoothness);
-        rotIndex1.y = Mathf.Lerp(rotIndex1.y, 360 + (-10 * fingerSpread), Time.deltaTime * smoothness);
-        rotIndex2.z = Mathf.Lerp(rotIndex2.z, 90 * indexCurl, Time.deltaTime * smoothness);
-        rotIndex3.z = Mathf.Lerp(rotIndex3.z, 90 * indexCurl, Time.deltaTime * smoothness);
+        var indexRotation1 = Mathf.Lerp(rotIndex1.z, 90f * indexCurl, Time.deltaTime * smoothness);
+        var indexRotation2 = Mathf.Lerp(rotIndex2.z, 90f * indexCurl, Time.deltaTime * smoothness);
+        var indexRotation3 = Mathf.Lerp(rotIndex3.z, 90f * indexCurl, Time.deltaTime * smoothness);
+
+        if (indexCollider)
+        {
+            if (indexRotation1 > rotIndex1.z)
+            {
+                // The desired rotation is closing
+                indexCollider.Trigger(true, Color.green);
+            }
+            else if (indexRotation1 < rotIndex1.z)
+            {
+                // The desired rotation is opening
+                indexCollider.Trigger(false, Color.white);
+            }
+            // If desired rotation is not a change, leave trigger as is.
+        }
+        rotIndex1.z = indexRotation1;
+        rotIndex1.y = Mathf.Lerp(rotIndex1.y, 360f + (-10f * fingerSpread), Time.deltaTime * smoothness);
+        rotIndex2.z = indexRotation2;
+        rotIndex3.z = indexRotation3;
 
         index1.localEulerAngles = rotIndex1;
         index2.localEulerAngles = rotIndex2;
         index3.localEulerAngles = rotIndex3;
+
         if (indexCollider != null && !indexCollider.otherName.Equals(""))
         {
             // Move back to before the collision
@@ -217,10 +254,28 @@ public class HandVRController : MonoBehaviour {
             index3.localEulerAngles = rotIndex3;
         }
 
-        rotMiddle1.z = Mathf.Lerp(rotMiddle1.z, 90 * middleCurl, Time.deltaTime * smoothness);
-        rotMiddle1.y = Mathf.Lerp(rotMiddle1.y, (3 * fingerSpread), Time.deltaTime * smoothness);
-        rotMiddle2.z = Mathf.Lerp(rotMiddle2.z, 90 * middleCurl, Time.deltaTime * smoothness);
-        rotMiddle3.z = Mathf.Lerp(rotMiddle3.z, 90 * middleCurl, Time.deltaTime * smoothness);
+        var middleRotation1 = Mathf.Lerp(rotMiddle1.z, 90f * middleCurl, Time.deltaTime * smoothness);
+        var middleRotation2 = Mathf.Lerp(rotMiddle2.z, 90f * middleCurl, Time.deltaTime * smoothness);
+        var middleRotation3 = Mathf.Lerp(rotMiddle3.z, 90f * middleCurl, Time.deltaTime * smoothness);
+        if (middleCollider)
+        {
+            if (middleRotation1 > rotMiddle1.z)
+            {
+                // The desired rotation is closing
+                middleCollider.Trigger(true, Color.green);
+            }
+            else if (middleRotation1 < rotMiddle1.z)
+            {
+                // The desired rotation is opening
+                middleCollider.Trigger(false, Color.white);
+            }
+            // If desired rotation is not a change, leave trigger as is.
+        }
+        rotMiddle1.z = middleRotation1;
+        rotMiddle1.y = Mathf.Lerp(rotMiddle1.y, (3f * fingerSpread), Time.deltaTime * smoothness);
+        rotMiddle2.z = middleRotation2;
+        rotMiddle3.z = middleRotation3;
+
         middle1.localEulerAngles = rotMiddle1;
         middle2.localEulerAngles = rotMiddle2;
         middle3.localEulerAngles = rotMiddle3;
@@ -234,10 +289,29 @@ public class HandVRController : MonoBehaviour {
             middle3.localEulerAngles = rotMiddle3;
         }
 
-        rotRing1.z = Mathf.Lerp(rotRing1.z, 90 * ringCurl, Time.deltaTime * smoothness);
+        var ringRotation1 = Mathf.Lerp(rotRing1.z, 90f * ringCurl, Time.deltaTime * smoothness);
+        var ringRotation2 = Mathf.Lerp(rotRing2.z, 90f * ringCurl, Time.deltaTime * smoothness);
+        var ringRotation3 = Mathf.Lerp(rotRing3.z, 90f * ringCurl, Time.deltaTime * smoothness);
+        if (ringCollider)
+        {
+            if (ringRotation1 > rotRing1.z)
+            {
+                // The desired rotation is closing
+                ringCollider.Trigger(true, Color.green);
+            }
+            else if (ringRotation1 < rotRing1.z)
+            {
+                // The desired rotation is opening
+                ringCollider.Trigger(false, Color.white);
+            }
+            // If desired rotation is not a change, leave trigger as is.
+        }
+
+        rotRing1.z = ringRotation1;
         rotRing1.y = Mathf.Lerp(rotRing1.y, (15f * fingerSpread), Time.deltaTime * smoothness);
-        rotRing2.z = Mathf.Lerp(rotRing2.z, 90 * ringCurl, Time.deltaTime * smoothness);
-        rotRing3.z = Mathf.Lerp(rotRing3.z, 90 * ringCurl, Time.deltaTime * smoothness);
+        rotRing2.z = ringRotation2;
+        rotRing3.z = ringRotation3;
+
         ring1.localEulerAngles = rotRing1;
         ring2.localEulerAngles = rotRing2;
         ring3.localEulerAngles = rotRing3;
@@ -252,10 +326,30 @@ public class HandVRController : MonoBehaviour {
             ring3.localEulerAngles = rotRing3;
         }
 
-        rotPinky1.z = Mathf.Lerp(rotPinky1.z, 90 * pinkyCurl, Time.deltaTime * smoothness);
-        rotPinky1.y = Mathf.Lerp(rotPinky1.y, (20 * fingerSpread), Time.deltaTime * smoothness);
-        rotPinky2.z = Mathf.Lerp(rotPinky2.z, 90 * pinkyCurl, Time.deltaTime * smoothness);
-        rotPinky3.z = Mathf.Lerp(rotPinky3.z, 90 * pinkyCurl, Time.deltaTime * smoothness);
+        var pinkyRotation1 = Mathf.Lerp(rotPinky1.z, 90f * pinkyCurl, Time.deltaTime * smoothness);
+        var pinkyRotation2 = Mathf.Lerp(rotPinky2.z, 90f * pinkyCurl, Time.deltaTime * smoothness);
+        var pinkyRotation3 = Mathf.Lerp(rotPinky3.z, 90f * pinkyCurl, Time.deltaTime * smoothness);
+
+        if (pinkyCollider)
+        {
+            if (pinkyRotation1 > rotPinky1.z)
+            {
+                // The desired rotation is closing
+                pinkyCollider.Trigger(true, Color.green);
+            }
+            else if (pinkyRotation1 < rotPinky1.z)
+            {
+                // The desired rotation is opening
+                pinkyCollider.Trigger(false, Color.white);
+            }
+            // If desired rotation is not a change, leave trigger as is.
+        }
+
+        rotPinky1.z = pinkyRotation1;
+        rotPinky1.y = Mathf.Lerp(rotPinky1.y, (20f * fingerSpread), Time.deltaTime * smoothness);
+        rotPinky2.z = pinkyRotation2;
+        rotPinky3.z = pinkyRotation3;
+
         pinky1.localEulerAngles = rotPinky1;
         pinky2.localEulerAngles = rotPinky2;
         pinky3.localEulerAngles = rotPinky3;
@@ -268,15 +362,12 @@ public class HandVRController : MonoBehaviour {
             pinky2.localEulerAngles = rotPinky2;
             pinky3.localEulerAngles = rotPinky3;
         }
-    }
-    public void EnableGrab(bool enable)
-    {
 
-        palmCollider.isTrigger = enable;
-        thumbCollider.Touch(enable);
-        indexCollider.Touch(enable);
-        middleCollider.Touch(enable);
-        ringCollider.Touch(enable);
-        pinkyCollider.Touch(enable);
+        if (palmCollider)
+        {
+            // TODO: this presumes that the middle finger is the determination of whether an object is being held.
+            // We enable to trigger to prevent a held object from being buffeted around by the palm collider.
+            palmCollider.Trigger(middleCollider.IsTrigger(), (middleCollider.IsTrigger() ? Color.green : Color.white));
+        }
     }
 }

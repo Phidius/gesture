@@ -5,18 +5,39 @@ using UnityEngine;
 public class FingerCollider : MonoBehaviour {
 
     public string otherName = string.Empty;
+    public Renderer indicatorRenderer;
+
     private Collider fingerCollider;
 
     void Start()
     {
         fingerCollider = gameObject.GetComponent<Collider>();
     }
-
-    public void Touch(bool enable)
+    
+    public void Trigger(bool enable, Color color)
     {
+        if (enable)
+        {
+            if (indicatorRenderer)
+            {
+                indicatorRenderer.material.color = color;
+                //Debug.Log("FingerCollider.Trigger (" + color.ToString() + ")");
+            }
+        }
+        else
+        {
+            if (indicatorRenderer)
+            {
+                indicatorRenderer.material.color = Color.white;
+                //Debug.Log("FingerCollider.Trigger (White)");
+            }
+        }
         fingerCollider.isTrigger = enable;
     }
-
+     public bool IsTrigger()
+    {
+        return fingerCollider.isTrigger;
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.transform.root.gameObject.name.Equals(transform.root.gameObject.name))
@@ -33,6 +54,10 @@ public class FingerCollider : MonoBehaviour {
         {
             //Debug.Log(transform.gameObject.name + ":Stop touching " + otherName);
             otherName = string.Empty;
+            if (indicatorRenderer)
+            {
+                indicatorRenderer.material.color = Color.grey;
+            }
         }
     }
 }
