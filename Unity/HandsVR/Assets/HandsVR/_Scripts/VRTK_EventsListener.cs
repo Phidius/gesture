@@ -6,6 +6,9 @@ using VRTK;
 public class VRTK_EventsListener : MonoBehaviour {
 
     private HandVRController handVRController;
+    private VRTK_InteractGrab grabber;
+    private Transform customAttachPoint;
+
     private float thumbRest = .75f;
     private float indexRest = .25f;
     private float middleRest = .3f;
@@ -14,11 +17,14 @@ public class VRTK_EventsListener : MonoBehaviour {
 
     private bool thumbTouch = false;
     private float gripIndex = 0f;
+    private float triggerIndex = 0f;
 
     // Use this for initialization
     void Start () {
 
         var controllerEvents = GetComponentInParent<VRTK_ControllerEvents>();
+        grabber = GetComponentInParent<VRTK_InteractGrab>();
+        customAttachPoint = transform.Find("CustomAttachPoint");
         handVRController = GetComponent<HandVRController>();
 
         // Register events to detect when close enough to grab
@@ -49,10 +55,45 @@ public class VRTK_EventsListener : MonoBehaviour {
         handVRController.pinkyCurl = pinkyRest;
     }
 
+    void Update()
+    {
+        var thumbCollider = handVRController.thumbCollider.otherName;
+        if (thumbCollider == null)
+        {
+            if (grabber && grabber.GetGrabbedObject() != null)
+            {
+                grabber.ForceRelease(false);
+            }
+            // Only need to check if the thumb is touching
+            return;
+        }
+
+        if (handVRController.indexCollider.otherName == thumbCollider
+            || handVRController.middleCollider.otherName == thumbCollider
+            || handVRController.ringCollider.otherName == thumbCollider
+            || handVRController.pinkyCollider.otherName == thumbCollider)
+        {
+            var interactableObject = thumbCollider.GetComponent<VRTK_InteractableObject>();
+            if (interactableObject != null && interactableObject.isGrabbable && grabber != null)
+            {
+                interactableObject.GetComponent<Rigidbody>().mass = 0;
+                grabber.AttemptGrab();
+            }
+            return;
+        }
+        else
+        {
+            if (grabber && grabber.GetGrabbedObject() != null)
+            {
+                grabber.ForceRelease(false);
+            }
+        }
+    }
+
     private void DoStartTouch(object sender, ObjectInteractEventArgs e)
     {
         // Spread the fingers when a pickup is available to pickup items better
-        if (gripIndex < 0.05f)
+        if (gripIndex < 0.05f && triggerIndex < 0.05f && thumbTouch == false)
         {
             handVRController.fingerSpread = 1f;
 
@@ -67,7 +108,7 @@ public class VRTK_EventsListener : MonoBehaviour {
     }
     private void DoEndTouch(object sender, ObjectInteractEventArgs e)
     {
-        if (gripIndex < .05f)
+        if (gripIndex < .05f && gripIndex < 0.05f && triggerIndex < 0.05f && thumbTouch == false)
         {
             // Return fingers to their default orientation when a pickup is no longer available
             handVRController.fingerSpread = 0f;
@@ -94,6 +135,7 @@ public class VRTK_EventsListener : MonoBehaviour {
     private void DoTriggerAxisChanged(object sender, ControllerInteractionEventArgs e)
     {
         handVRController.indexCurl = .3f + (.7f * e.buttonPressure);
+        triggerIndex = e.buttonPressure;
     }
 
     private void DoGripAxisChanged(object sender, ControllerInteractionEventArgs e)

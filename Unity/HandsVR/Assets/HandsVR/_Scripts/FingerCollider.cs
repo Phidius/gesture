@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FingerCollider : MonoBehaviour {
 
-    public string otherName = string.Empty;
+    public Transform otherName = null;
     public Renderer indicatorRenderer;
 
     private Collider fingerCollider;
@@ -38,22 +38,31 @@ public class FingerCollider : MonoBehaviour {
     {
         return fingerCollider.isTrigger;
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("OnCollisionEnter");
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        Debug.Log("OnCollisionExit");
+
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.transform.root.gameObject.name.Equals(transform.root.gameObject.name))
         {
             return;
         }
-        otherName = other.gameObject.name;
+        otherName = other.gameObject.transform;
         //Debug.Log(transform.gameObject.name + ":Start touching " + otherName);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == otherName)
+        if (other.gameObject.transform == otherName)
         {
             //Debug.Log(transform.gameObject.name + ":Stop touching " + otherName);
-            otherName = string.Empty;
+            otherName = null;
             if (indicatorRenderer)
             {
                 indicatorRenderer.material.color = Color.grey;

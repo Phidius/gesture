@@ -20,6 +20,7 @@ public class HandVRController : MonoBehaviour {
     public float fingerSpread;
 
     private int smoothness = 7;
+    private enum FingerMovement { Opening, Closing, None };
 
     private Transform thumb1;
     private Transform thumb2;
@@ -142,10 +143,11 @@ public class HandVRController : MonoBehaviour {
 
             }
         }
+        // TODO: validate that all required colliders are found
     }
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
         if (!PreventMovement)
         {
@@ -179,20 +181,22 @@ public class HandVRController : MonoBehaviour {
         var thumbRotation1 = Mathf.Lerp(rotThumb1.z, 95f + (50f * thumbCurl), Time.deltaTime * smoothness);
         var thumbRotation2 = Mathf.Lerp(rotThumb2.z, 10f * thumbCurl, Time.deltaTime * smoothness);
         var thumbRotation3 = Mathf.Lerp(rotThumb3.z, 40f * thumbCurl, Time.deltaTime * smoothness);
-        if (thumbCollider)
+
+        var thumbMovement = FingerMovement.None;
+
+        if (thumbRotation1 > rotThumb1.z)
         {
-            if (thumbRotation1 > rotThumb1.z)
-            {
-                // The desired rotation is closing
-                thumbCollider.Trigger(true, Color.green);
-            }
-            else if (thumbRotation1 < rotThumb1.z)
-            {
-                // The desired rotation is opening
-                thumbCollider.Trigger(false, Color.white);
-            }
-            // If desired rotation is not a change, leave trigger as is.
+            // The desired rotation is closing
+            thumbMovement = FingerMovement.Closing;
+            thumbCollider.Trigger(true, Color.green);
         }
+        else if (thumbRotation1 < rotThumb1.z)
+        {
+            thumbMovement = FingerMovement.Opening;
+            // The desired rotation is opening
+            thumbCollider.Trigger(false, Color.white);
+        }
+
         rotThumb1.z = thumbRotation1;
         rotThumb2.z = thumbRotation2;
         rotThumb3.z = thumbRotation3;
@@ -201,7 +205,7 @@ public class HandVRController : MonoBehaviour {
         thumb2.localEulerAngles = rotThumb2;
         thumb3.localEulerAngles = rotThumb3;
 
-        if (thumbCollider != null && !thumbCollider.otherName.Equals(string.Empty))
+        if (thumbCollider.otherName != null)
         {
             rotThumb1 = new Vector3(lastThumb1.x, lastThumb1.y, lastThumb1.z);
             rotThumb2 = new Vector3(lastThumb2.x, lastThumb2.y, lastThumb2.z);
@@ -243,7 +247,7 @@ public class HandVRController : MonoBehaviour {
         index2.localEulerAngles = rotIndex2;
         index3.localEulerAngles = rotIndex3;
 
-        if (indexCollider != null && !indexCollider.otherName.Equals(""))
+        if (indexCollider != null && !(indexCollider.otherName == null))
         {
             // Move back to before the collision
             rotIndex1 = new Vector3(lastIndex1.x, lastIndex1.y, lastIndex1.z);
@@ -279,7 +283,7 @@ public class HandVRController : MonoBehaviour {
         middle1.localEulerAngles = rotMiddle1;
         middle2.localEulerAngles = rotMiddle2;
         middle3.localEulerAngles = rotMiddle3;
-        if (middleCollider != null && !middleCollider.otherName.Equals(""))
+        if (middleCollider != null && !(middleCollider.otherName== null))
         {
             rotMiddle1 = new Vector3(lastMiddle1.x, lastMiddle1.y, lastMiddle1.z);
             rotMiddle2 = new Vector3(lastMiddle2.x, lastMiddle2.y, lastMiddle2.z);
@@ -316,7 +320,7 @@ public class HandVRController : MonoBehaviour {
         ring2.localEulerAngles = rotRing2;
         ring3.localEulerAngles = rotRing3;
 
-        if (ringCollider != null && !ringCollider.otherName.Equals(""))
+        if (ringCollider != null && !(ringCollider.otherName == null))
         {
             rotRing1 = new Vector3(lastRing1.x, lastRing1.y, lastRing1.z);
             rotRing2 = new Vector3(lastRing2.x, lastRing2.y, lastRing2.z);
@@ -353,7 +357,7 @@ public class HandVRController : MonoBehaviour {
         pinky1.localEulerAngles = rotPinky1;
         pinky2.localEulerAngles = rotPinky2;
         pinky3.localEulerAngles = rotPinky3;
-        if (pinkyCollider != null && !pinkyCollider.otherName.Equals(""))
+        if (pinkyCollider != null && !(pinkyCollider.otherName == null))
         {
             rotPinky1 = new Vector3(lastPinky1.x, lastPinky1.y, lastPinky1.z);
             rotPinky2 = new Vector3(lastPinky2.x, lastPinky2.y, lastPinky2.z);
