@@ -23,36 +23,51 @@ public class VRTK_EventsListener : MonoBehaviour {
     void Start () {
 
         var controllerEvents = GetComponentInParent<VRTK_ControllerEvents>();
+        var controllerTouch = GetComponentInParent<VRTK_InteractTouch>();
         grabber = GetComponentInParent<VRTK_InteractGrab>();
         customAttachPoint = transform.Find("CustomAttachPoint");
         handVRController = GetComponent<HandVRController>();
 
         // Register events to detect when close enough to grab
-        GetComponentInParent<VRTK_InteractTouch>().ControllerTouchInteractableObject += DoStartTouch;
-        GetComponentInParent<VRTK_InteractTouch>().ControllerUntouchInteractableObject += DoEndTouch;
+        if (controllerTouch)
+        {
+            controllerTouch.ControllerTouchInteractableObject += DoStartTouch;
+            controllerTouch.ControllerUntouchInteractableObject += DoEndTouch;
+        }
 
-        controllerEvents.TriggerTouchStart += new ControllerInteractionEventHandler(DoTriggerTouchStart);
-        controllerEvents.TriggerTouchEnd += new ControllerInteractionEventHandler(DoTriggerTouchEnd);
-        controllerEvents.TriggerAxisChanged += new ControllerInteractionEventHandler(DoTriggerAxisChanged);
-        
-        controllerEvents.GripAxisChanged += new ControllerInteractionEventHandler(DoGripAxisChanged);
+        if (controllerEvents)
+        {
+            controllerEvents.TriggerTouchStart += new ControllerInteractionEventHandler(DoTriggerTouchStart);
+            controllerEvents.TriggerTouchEnd += new ControllerInteractionEventHandler(DoTriggerTouchEnd);
+            controllerEvents.TriggerAxisChanged += new ControllerInteractionEventHandler(DoTriggerAxisChanged);
 
-        controllerEvents.TouchpadPressed += new ControllerInteractionEventHandler(DoTouchpadPressed);
-        controllerEvents.TouchpadReleased += new ControllerInteractionEventHandler(DoTouchpadReleased);
-        
-        controllerEvents.ButtonOneTouchStart += new ControllerInteractionEventHandler(DoButtonOneTouchStart);
-        controllerEvents.ButtonOneTouchEnd += new ControllerInteractionEventHandler(DoButtonOneTouchEnd);
-        controllerEvents.ButtonTwoTouchStart += new ControllerInteractionEventHandler(DoButtonTwoTouchStart);
-        controllerEvents.ButtonTwoTouchEnd += new ControllerInteractionEventHandler(DoButtonTwoTouchEnd);
+            controllerEvents.GripAxisChanged += new ControllerInteractionEventHandler(DoGripAxisChanged);
 
-        controllerEvents.TouchpadAxisChanged += new ControllerInteractionEventHandler(DoTouchpadAxisChanged);
+            controllerEvents.TouchpadPressed += new ControllerInteractionEventHandler(DoTouchpadPressed);
+            controllerEvents.TouchpadReleased += new ControllerInteractionEventHandler(DoTouchpadReleased);
+
+            controllerEvents.ButtonOneTouchStart += new ControllerInteractionEventHandler(DoButtonOneTouchStart);
+            controllerEvents.ButtonOneTouchEnd += new ControllerInteractionEventHandler(DoButtonOneTouchEnd);
+            controllerEvents.ButtonTwoTouchStart += new ControllerInteractionEventHandler(DoButtonTwoTouchStart);
+            controllerEvents.ButtonTwoTouchEnd += new ControllerInteractionEventHandler(DoButtonTwoTouchEnd);
+
+            controllerEvents.TouchpadAxisChanged += new ControllerInteractionEventHandler(DoTouchpadAxisChanged);
+
+        }
+
+        //handVRController.fingerSpread = 0f;
+        //handVRController.thumbCurl = thumbRest;
+        //handVRController.indexCurl = indexRest;
+        //handVRController.middleCurl = middleRest;
+        //handVRController.ringCurl = ringRest;
+        //handVRController.pinkyCurl = pinkyRest;
 
         handVRController.fingerSpread = 0f;
-        handVRController.thumbCurl = thumbRest;
-        handVRController.indexCurl = indexRest;
-        handVRController.middleCurl = middleRest;
-        handVRController.ringCurl = ringRest;
-        handVRController.pinkyCurl = pinkyRest;
+        handVRController.thumbCurl = 0f;
+        handVRController.indexCurl = 0f;
+        handVRController.middleCurl = 0f;
+        handVRController.ringCurl = 0f;
+        handVRController.pinkyCurl = 0f;
     }
 
     void Update()
@@ -76,7 +91,6 @@ public class VRTK_EventsListener : MonoBehaviour {
             var interactableObject = thumbCollider.GetComponent<VRTK_InteractableObject>();
             if (interactableObject != null && interactableObject.isGrabbable && grabber != null)
             {
-                interactableObject.GetComponent<Rigidbody>().mass = 0;
                 grabber.AttemptGrab();
             }
             return;
