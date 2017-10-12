@@ -55,19 +55,13 @@ public class VRTK_EventsListener : MonoBehaviour {
 
         }
 
-        //handVRController.fingerSpread = 0f;
-        //handVRController.thumbCurl = thumbRest;
-        //handVRController.indexCurl = indexRest;
-        //handVRController.middleCurl = middleRest;
-        //handVRController.ringCurl = ringRest;
-        //handVRController.pinkyCurl = pinkyRest;
-
         handVRController.fingerSpread = 0f;
-        handVRController.thumbCurl = 0f;
-        handVRController.indexCurl = 0f;
-        handVRController.middleCurl = 0f;
-        handVRController.ringCurl = 0f;
-        handVRController.pinkyCurl = 0f;
+        handVRController.thumbCurl = thumbRest;
+        handVRController.indexCurl = indexRest;
+        handVRController.middleCurl = middleRest;
+        handVRController.ringCurl = ringRest;
+        handVRController.pinkyCurl = pinkyRest;
+
     }
 
     void Update()
