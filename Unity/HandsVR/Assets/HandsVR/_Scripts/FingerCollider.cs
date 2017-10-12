@@ -38,21 +38,13 @@ public class FingerCollider : MonoBehaviour {
     {
         return fingerCollider.isTrigger;
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("OnCollisionEnter");
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        Debug.Log("OnCollisionExit");
 
-    }
     void OnTriggerEnter(Collider other)
     {
-        if (other.transform.root.gameObject.name.Equals(transform.root.gameObject.name))
-        {
-            return;
-        }
+        //if (other.transform.root.gameObject.name.Equals(transform.root.gameObject.name))
+        //{
+        //    return;
+        //}
         otherName = other.gameObject.transform;
         //Debug.Log(transform.gameObject.name + ":Start touching " + otherName);
     }

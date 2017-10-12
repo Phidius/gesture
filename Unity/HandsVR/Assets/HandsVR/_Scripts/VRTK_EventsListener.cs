@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
+using VRTK.GrabAttachMechanics;
 
 public class VRTK_EventsListener : MonoBehaviour {
 
@@ -71,7 +72,16 @@ public class VRTK_EventsListener : MonoBehaviour {
         {
             if (grabber && grabber.GetGrabbedObject() != null)
             {
-                grabber.ForceRelease(false);
+                var baseGrabAttach = grabber.GetGrabbedObject().GetComponent<VRTK_BaseGrabAttach>();
+                if (baseGrabAttach.precisionGrab)
+                {
+                    grabber.ForceRelease(false);
+                }
+                else if (!thumbTouch || (gripIndex < 0.05f && triggerIndex < 0.05f))
+                {
+                    // when dealing with a non-precision grab, only drop the item if the thumb is up OR both the grip and trigger are released
+                    grabber.ForceRelease(false);
+                }
             }
             // Only need to check if the thumb is touching
             return;
@@ -82,6 +92,7 @@ public class VRTK_EventsListener : MonoBehaviour {
             || handVRController.ringCollider.otherName == thumbCollider
             || handVRController.pinkyCollider.otherName == thumbCollider)
         {
+            // if at least one of the fingers is touching the same thing as the thumb...
             var interactableObject = thumbCollider.GetComponent<VRTK_InteractableObject>();
             if (interactableObject != null && interactableObject.isGrabbable && grabber != null)
             {
@@ -91,9 +102,24 @@ public class VRTK_EventsListener : MonoBehaviour {
         }
         else
         {
+            // None of the fingers are touching the same thing as the thumb - drop the held item!
             if (grabber && grabber.GetGrabbedObject() != null)
             {
-                grabber.ForceRelease(false);
+                // First, we need to determine which method is used to hold the object.
+                var baseGrabAttach = grabber.GetGrabbedObject().GetComponent<VRTK_BaseGrabAttach>();
+                if (baseGrabAttach.precisionGrab)
+                {
+                    // Object is held by the colliders on the fingers - just drop it.
+                    grabber.ForceRelease(false);
+                }
+                else if (!thumbTouch || (gripIndex < 0.05f && triggerIndex < 0.05f))
+                {
+                    // when dealing with a non-precision grab, only drop the item if the thumb is up OR both the grip and trigger are released
+                    // We can't rely on the collider method, because the item gets moved to a specific location, and the colliders will be empty
+                    // after the item is picked up, but before the fingers can shift to the new position.  So, we "presume" that the user is 
+                    // holding the grip/trigger/thumb button fully in the act of holding the item.
+                    grabber.ForceRelease(false);
+                }
             }
         }
     }
