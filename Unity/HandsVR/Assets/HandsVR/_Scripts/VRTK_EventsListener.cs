@@ -67,10 +67,17 @@ public class VRTK_EventsListener : MonoBehaviour {
 
     void Update()
     {
+        if (!grabber)
+        {
+            Debug.Log("Missing VRTK_GrabObject");
+            return;
+        }
+
+        var grabbedObject = grabber.GetGrabbedObject();
         var thumbCollider = handVRController.thumbCollider.otherName;
         if (thumbCollider == null)
         {
-            if (grabber && grabber.GetGrabbedObject() != null)
+            if (grabbedObject && grabbedObject.name.Equals(thumbCollider))
             {
                 var baseGrabAttach = grabber.GetGrabbedObject().GetComponent<VRTK_BaseGrabAttach>();
                 if (baseGrabAttach.precisionGrab)
@@ -103,7 +110,7 @@ public class VRTK_EventsListener : MonoBehaviour {
         else
         {
             // None of the fingers are touching the same thing as the thumb - drop the held item!
-            if (grabber && grabber.GetGrabbedObject() != null)
+            if (grabbedObject && grabbedObject.name.Equals(thumbCollider))
             {
                 // First, we need to determine which method is used to hold the object.
                 var baseGrabAttach = grabber.GetGrabbedObject().GetComponent<VRTK_BaseGrabAttach>();
@@ -126,6 +133,12 @@ public class VRTK_EventsListener : MonoBehaviour {
 
     private void DoStartTouch(object sender, ObjectInteractEventArgs e)
     {
+        if (grabber.GetGrabbedObject() != null)
+        {
+            Debug.Log("DoStartTouch: Already holding something");
+            return;
+        }
+
         // Spread the fingers when a pickup is available to pickup items better
         if (gripIndex < 0.05f && triggerIndex < 0.05f && thumbTouch == false)
         {
@@ -142,6 +155,12 @@ public class VRTK_EventsListener : MonoBehaviour {
     }
     private void DoEndTouch(object sender, ObjectInteractEventArgs e)
     {
+
+        if (grabber.GetGrabbedObject() != null)
+        {
+            Debug.Log("DoEndTouch: Already holding something");
+            return;
+        }
         if (gripIndex < .05f && gripIndex < 0.05f && triggerIndex < 0.05f && thumbTouch == false)
         {
             // Return fingers to their default orientation when a pickup is no longer available

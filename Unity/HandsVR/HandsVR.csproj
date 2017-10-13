@@ -76,9 +76,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook.Unity.Settings">
-      <HintPath>Library\FacebookSDK\Facebook.Unity.Settings.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="HandsVR.Plugins.csproj">
@@ -480,6 +477,7 @@
     <Compile Include="Assets\VRTK\Scripts\Utilities\VRTK_SDKTransformModify.cs" />
     <Compile Include="Assets\VRTK\Scripts\Utilities\VRTK_SharedMethods.cs" />
     <Compile Include="Assets\VRTK\Scripts\Utilities\VRTK_Simulator.cs" />
+    <Compile Include="Assets\_Scripts\KeepObjectOffFloor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
