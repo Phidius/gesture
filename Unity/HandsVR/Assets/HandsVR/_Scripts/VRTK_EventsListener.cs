@@ -77,17 +77,17 @@ public class VRTK_EventsListener : MonoBehaviour {
         var thumbCollider = handVRController.thumbCollider.otherName;
         if (thumbCollider == null)
         {
-            if (grabbedObject && grabbedObject.name.Equals(thumbCollider))
+            if (grabbedObject)
             {
                 var baseGrabAttach = grabber.GetGrabbedObject().GetComponent<VRTK_BaseGrabAttach>();
                 if (baseGrabAttach.precisionGrab)
                 {
-                    grabber.ForceRelease(false);
+                    grabber.ForceRelease(true);
                 }
                 else if (!thumbTouch || (gripIndex < 0.05f && triggerIndex < 0.05f))
                 {
                     // when dealing with a non-precision grab, only drop the item if the thumb is up OR both the grip and trigger are released
-                    grabber.ForceRelease(false);
+                    grabber.ForceRelease(true);
                 }
             }
             // Only need to check if the thumb is touching
@@ -110,14 +110,14 @@ public class VRTK_EventsListener : MonoBehaviour {
         else
         {
             // None of the fingers are touching the same thing as the thumb - drop the held item!
-            if (grabbedObject && grabbedObject.name.Equals(thumbCollider))
+            if (grabbedObject && grabbedObject.name.Equals(thumbCollider.name))
             {
                 // First, we need to determine which method is used to hold the object.
                 var baseGrabAttach = grabber.GetGrabbedObject().GetComponent<VRTK_BaseGrabAttach>();
                 if (baseGrabAttach.precisionGrab)
                 {
                     // Object is held by the colliders on the fingers - just drop it.
-                    grabber.ForceRelease(false);
+                    grabber.ForceRelease(true);
                 }
                 else if (!thumbTouch || (gripIndex < 0.05f && triggerIndex < 0.05f))
                 {
@@ -125,7 +125,7 @@ public class VRTK_EventsListener : MonoBehaviour {
                     // We can't rely on the collider method, because the item gets moved to a specific location, and the colliders will be empty
                     // after the item is picked up, but before the fingers can shift to the new position.  So, we "presume" that the user is 
                     // holding the grip/trigger/thumb button fully in the act of holding the item.
-                    grabber.ForceRelease(false);
+                    grabber.ForceRelease(true);
                 }
             }
         }
@@ -135,7 +135,7 @@ public class VRTK_EventsListener : MonoBehaviour {
     {
         if (grabber.GetGrabbedObject() != null)
         {
-            Debug.Log("DoStartTouch: Already holding something");
+            //Debug.Log("DoStartTouch: Already holding something");
             return;
         }
 
@@ -158,7 +158,7 @@ public class VRTK_EventsListener : MonoBehaviour {
 
         if (grabber.GetGrabbedObject() != null)
         {
-            Debug.Log("DoEndTouch: Already holding something");
+            //Debug.Log("DoEndTouch: Already holding something");
             return;
         }
         if (gripIndex < .05f && gripIndex < 0.05f && triggerIndex < 0.05f && thumbTouch == false)

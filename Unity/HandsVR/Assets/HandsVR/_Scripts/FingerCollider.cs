@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VRTK.GrabAttachMechanics;
 
 public class FingerCollider : MonoBehaviour {
 
@@ -41,10 +42,11 @@ public class FingerCollider : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        //if (other.transform.root.gameObject.name.Equals(transform.root.gameObject.name))
-        //{
-        //    return;
-        //}
+        if (!other.gameObject.GetComponent<VRTK_BaseGrabAttach>())
+        {
+            //Debug.Log("Only detect objects that can be grabbed");
+            return;
+        }
         otherName = other.gameObject.transform;
         //Debug.Log(transform.gameObject.name + ":Start touching " + otherName);
     }
