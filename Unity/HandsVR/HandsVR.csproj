@@ -481,6 +481,7 @@
     <Compile Include="Assets\VRTK\Scripts\Utilities\VRTK_SharedMethods.cs" />
     <Compile Include="Assets\VRTK\Scripts\Utilities\VRTK_Simulator.cs" />
     <Compile Include="Assets\_Scripts\KeepObjectOffFloor.cs" />
+    <Compile Include="Assets\_Scripts\RingWearManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />

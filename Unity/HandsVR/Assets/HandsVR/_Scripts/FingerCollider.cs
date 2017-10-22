@@ -9,10 +9,12 @@ public class FingerCollider : MonoBehaviour {
     public Renderer indicatorRenderer;
 
     private Collider fingerCollider;
+    private HandVRController handVRController;
 
     void Start()
     {
         fingerCollider = gameObject.GetComponent<Collider>();
+        handVRController = GetComponentInParent<HandVRController>();
     }
     
     public void Trigger(bool enable, Color color)
@@ -47,6 +49,7 @@ public class FingerCollider : MonoBehaviour {
             //Debug.Log("Only detect objects that can be grabbed");
             return;
         }
+
         otherName = other.gameObject.transform;
         //Debug.Log(transform.gameObject.name + ":Start touching " + otherName);
     }

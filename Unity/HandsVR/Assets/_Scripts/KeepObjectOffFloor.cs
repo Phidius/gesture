@@ -15,8 +15,7 @@ public class KeepObjectOffFloor : MonoBehaviour {
 
 		if (transform.position.y <= 1f)
         {
-            Debug.Log("Root: "+ transform.root.name);
-            Debug.Log("KeepObjectOffFloor - move " + gameObject.name + " off the floor, back to the original position!");
+            //Debug.Log("KeepObjectOffFloor - move " + gameObject.name + " off the floor, back to the original position!");
             transform.position = originalLocation;
         }
 	}
