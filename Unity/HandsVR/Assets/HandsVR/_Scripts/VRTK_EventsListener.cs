@@ -82,12 +82,12 @@ public class VRTK_EventsListener : MonoBehaviour {
                 var baseGrabAttach = grabber.GetGrabbedObject().GetComponent<VRTK_BaseGrabAttach>();
                 if (baseGrabAttach.precisionGrab)
                 {
-                    grabber.ForceRelease(true);
+                    // TEMP: grabber.ForceRelease(true);
                 }
                 else if (!thumbTouch || (gripIndex < 0.05f && triggerIndex < 0.05f))
                 {
                     // when dealing with a non-precision grab, only drop the item if the thumb is up OR both the grip and trigger are released
-                    grabber.ForceRelease(true);
+                    // TEMP: grabber.ForceRelease(true);
                 }
             }
             // Only need to check if the thumb is touching
@@ -103,7 +103,7 @@ public class VRTK_EventsListener : MonoBehaviour {
             var interactableObject = thumbCollider.GetComponent<VRTK_InteractableObject>();
             if (interactableObject != null && interactableObject.isGrabbable && grabber != null)
             {
-                grabber.AttemptGrab();
+                // TEMP: grabber.AttemptGrab();
             }
             return;
         }
@@ -117,7 +117,7 @@ public class VRTK_EventsListener : MonoBehaviour {
                 if (baseGrabAttach.precisionGrab)
                 {
                     // Object is held by the colliders on the fingers - just drop it.
-                    grabber.ForceRelease(true);
+                    // TEMP: grabber.ForceRelease(true);
                 }
                 else if (!thumbTouch || (gripIndex < 0.05f && triggerIndex < 0.05f))
                 {
@@ -125,7 +125,7 @@ public class VRTK_EventsListener : MonoBehaviour {
                     // We can't rely on the collider method, because the item gets moved to a specific location, and the colliders will be empty
                     // after the item is picked up, but before the fingers can shift to the new position.  So, we "presume" that the user is 
                     // holding the grip/trigger/thumb button fully in the act of holding the item.
-                    grabber.ForceRelease(true);
+                    // TEMP: grabber.ForceRelease(true);
                 }
             }
         }
