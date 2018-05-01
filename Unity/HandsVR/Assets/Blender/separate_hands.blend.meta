@@ -1,0 +1,159 @@
+fileFormatVersion: 2
+guid: 83abe03caad12ad4ebfa94f58326eb93
+timeCreated: 1525061301
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: businessman
+    100002: businessman-base
+    100004: businessman-base_001
+    100006: businessman_001
+    100008: hand_l
+    100010: hand_r
+    100012: index_01_l
+    100014: index_01_r
+    100016: index_02_l
+    100018: index_02_r
+    100020: index_03_l
+    100022: index_03_r
+    100024: middle_01_l
+    100026: middle_01_r
+    100028: middle_02_l
+    100030: middle_02_r
+    100032: middle_03_l
+    100034: middle_03_r
+    100036: pinky_01_l
+    100038: pinky_01_r
+    100040: pinky_02_l
+    100042: pinky_02_r
+    100044: pinky_03_l
+    100046: pinky_03_r
+    100048: ring_01_l
+    100050: ring_01_r
+    100052: ring_02_l
+    100054: ring_02_r
+    100056: ring_03_l
+    100058: ring_03_r
+    100060: //RootNode
+    100062: thumb_01_l
+    100064: thumb_01_r
+    100066: thumb_02_l
+    100068: thumb_02_r
+    100070: thumb_03_l
+    100072: thumb_03_r
+    100074: hands
+    400000: businessman
+    400002: businessman-base
+    400004: businessman-base_001
+    400006: businessman_001
+    400008: hand_l
+    400010: hand_r
+    400012: index_01_l
+    400014: index_01_r
+    400016: index_02_l
+    400018: index_02_r
+    400020: index_03_l
+    400022: index_03_r
+    400024: middle_01_l
+    400026: middle_01_r
+    400028: middle_02_l
+    400030: middle_02_r
+    400032: middle_03_l
+    400034: middle_03_r
+    400036: pinky_01_l
+    400038: pinky_01_r
+    400040: pinky_02_l
+    400042: pinky_02_r
+    400044: pinky_03_l
+    400046: pinky_03_r
+    400048: ring_01_l
+    400050: ring_01_r
+    400052: ring_02_l
+    400054: ring_02_r
+    400056: ring_03_l
+    400058: ring_03_r
+    400060: //RootNode
+    400062: thumb_01_l
+    400064: thumb_01_r
+    400066: thumb_02_l
+    400068: thumb_02_r
+    400070: thumb_03_l
+    400072: thumb_03_r
+    400074: hands
+    4300000: businessman-base_001
+    4300002: businessman-base
+    7400000: Default Take
+    9500000: //RootNode
+    13700000: businessman-base
+    13700002: businessman-base_001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

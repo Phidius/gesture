@@ -22,21 +22,21 @@ public class HandVRController : MonoBehaviour {
     private int smoothness = 7;
     private enum FingerMovement { Opening, Closing, None };
 
-    private Transform thumb1;
-    private Transform thumb2;
-    private Transform thumb3;
-    private Transform index1;
-    private Transform index2;
-    private Transform index3;
-    private Transform middle1;
-    private Transform middle2;
-    private Transform middle3;
-    private Transform ring1;
-    private Transform ring2;
-    private Transform ring3;
-    private Transform pinky1;
-    private Transform pinky2;
-    private Transform pinky3;
+    public Transform thumb1;
+    public Transform thumb2;
+    public Transform thumb3;
+    public Transform index1;
+    public Transform index2;
+    public Transform index3;
+    public Transform middle1;
+    public Transform middle2;
+    public Transform middle3;
+    public Transform ring1;
+    public Transform ring2;
+    public Transform ring3;
+    public Transform pinky1;
+    public Transform pinky2;
+    public Transform pinky3;
 
     public FingerCollider palmCollider;
     public FingerCollider thumbCollider;
