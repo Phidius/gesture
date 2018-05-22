@@ -220,16 +220,17 @@ public class HandVRController : MonoBehaviour {
         var thumbRotation3 = Mathf.Lerp(rotThumb3.x, initialThumbRotation.z + (75f * thumbCurl), Time.deltaTime * smoothness);
 
         var thumbMovement = FingerMovement.None;
-
-        if (thumbRotation1 > rotThumb1.y)
+        
+        if (thumbRotation1 * (rightHand ? 1 : -1) > rotThumb1.y * (rightHand ? 1 : -1))
         {
             // The desired rotation is closing
             thumbMovement = FingerMovement.Closing;
-            if (thumbCollider) 
+            if (thumbCollider)
                 thumbCollider.Trigger(true, Color.green);
         }
-        else if (thumbRotation1 < rotThumb1.y)
+        else if (thumbRotation1 * (rightHand ? 1 : -1) < rotThumb1.y)
         {
+
             thumbMovement = FingerMovement.Opening;
             // The desired rotation is opening
             if (thumbCollider)

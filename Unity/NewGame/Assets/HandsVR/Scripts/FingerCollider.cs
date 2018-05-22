@@ -24,18 +24,19 @@ public class FingerCollider : MonoBehaviour {
             if (indicatorRenderer)
             {
                 indicatorRenderer.material.color = color;
-                //Debug.Log("FingerCollider.Trigger (" + color.ToString() + ")");
             }
+            fingerCollider.isTrigger = enable;
         }
         else
         {
+            //Invoke("DisableTrigger", 0.5f);
             if (indicatorRenderer)
             {
                 indicatorRenderer.material.color = Color.white;
                 //Debug.Log("FingerCollider.Trigger (White)");
             }
+            fingerCollider.isTrigger = false;
         }
-        fingerCollider.isTrigger = enable;
     }
      public bool IsTrigger()
     {
@@ -65,5 +66,15 @@ public class FingerCollider : MonoBehaviour {
                 indicatorRenderer.material.color = Color.grey;
             }
         }
+    }
+
+    private void DisableTrigger()
+    {
+        if (indicatorRenderer)
+        {
+            indicatorRenderer.material.color = Color.white;
+            //Debug.Log("FingerCollider.Trigger (White)");
+        }
+        fingerCollider.isTrigger = false;
     }
 }

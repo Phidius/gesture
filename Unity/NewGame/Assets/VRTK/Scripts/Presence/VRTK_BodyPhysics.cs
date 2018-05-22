@@ -457,6 +457,7 @@ namespace VRTK
         {
             if (CheckValidCollision(collision.gameObject))
             {
+                Debug.Log(collision.gameObject);
                 CheckStepUpCollision(collision);
                 currentCollidingObject = collision.gameObject;
                 OnStartColliding(SetBodyPhysicsEvent(currentCollidingObject, collision.collider));
