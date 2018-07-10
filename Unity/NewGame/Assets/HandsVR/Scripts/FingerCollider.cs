@@ -59,7 +59,7 @@ public class FingerCollider : MonoBehaviour {
     {
         if (other.gameObject.transform == otherName)
         {
-            //Debug.Log(transform.gameObject.name + ":Stop touching " + otherName);
+            Debug.Log(transform.gameObject.name + ":Stop touching " + otherName);
             otherName = null;
             if (indicatorRenderer)
             {
